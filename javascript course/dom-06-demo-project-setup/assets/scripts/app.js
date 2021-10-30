@@ -9,6 +9,10 @@ const userInputs = addMovieModal.querySelectorAll('input');
 const deleteMovieModal = document.getElementById('delete-modal');
 const movies =[];
 
+const toggleBackdrop = ()=>{//function() to toggle the backdrop
+	backdrop.classList.toggle('visible');
+};
+
 const closeMovieModal =()=>{
 	addMovieModal.classList.remove('visible');
 }
@@ -18,12 +22,9 @@ const showMovieModal =()=>{//function() to toggle the movie modal
 	toggleBackdrop();
 }; 
 
-const toggleBackdrop = ()=>{//function() to toggle the backdrop
-	backdrop.classList.toggle('visible');
-};
-
 const cancelAddMovie =()=>{//function() to cancel the movie modal
 	clearMovieInputs();
+	toggleBackdrop();
 	closeMovieModal();
 };
 
@@ -47,12 +48,17 @@ const cancelMovieDeletion =()=>{
 	deleteMovieModal.classList.remove('visible');
 } 
 
-const deleteMovieHandler =(movieId)=>{   
+const deleteMovieHandler =movieId=>{    	
 	deleteMovieModal.classList.add('visible');
 	toggleBackdrop();
 	const cancelDeletion =deleteMovieModal.querySelector('.btn--passive');
-	const confirmDeletion = deleteMovieModal.querySelector('.btn--danger');
-	cancelDeletion.addEventListener('click',()=>{cancelMovieDeletion();});
+	let confirmDeletion = deleteMovieModal.querySelector('.btn--danger');
+	confirmDeletion.replaceWith(confirmDeletion.cloneNode(true));
+	confirmDeletion = deleteMovieModal.querySelector('.btn--danger');
+
+	cancelDeletion.removeEventListener('click',cancelMovieDeletion);
+
+	cancelDeletion.addEventListener('click',cancelMovieDeletion);
 	confirmDeletion.addEventListener('click',deleteMovie.bind(null,movieId));
 }
 
@@ -67,6 +73,8 @@ const deleteMovie = (movieId)=>{
 	movies.splice(movieIndex,1);
 	const listRoot = document.getElementById('movie-list');
 	listRoot.children[movieIndex].remove();
+	cancelMovieDeletion();
+	updateUI();
 }
 
 const renderNewMovie = (id,title,url,rating)=>{
@@ -114,6 +122,7 @@ const addMovieHandler = ()=>{//check the inputs and make sure its valuable
 const backDropClickHandler =()=>{
 	closeMovieModal();
 	cancelMovieDeletion();
+	clearMovieInputs();
 }
 
 startAddMovieButton.addEventListener('click',showMovieModal);
