@@ -63,12 +63,19 @@ class ShoppingCart {
         this.totalOutput.innerHTML= `<h2>Total: \$${this.totalAmount}</h2>`;
     }
 
+    orderProduct(){
+        console.log('Ordering.......')
+        console.log(this.item)
+    }
+
     render(){
         const cartEl = document.createElement('section');
         cartEl.innerHTML = `
         <h2>Total: \$${0}</h2>
         <button>Order Now</button>
         `;
+        const orderButton = cartEl.querySelector('button')
+        orderButton.addEventListener('click', this.orderProduct.bind(this))
         cartEl.className = 'cart';
         this.totalOutput = cartEl.querySelector('h2');
         return cartEl;
