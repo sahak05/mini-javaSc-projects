@@ -1,5 +1,15 @@
+
+
 * {
   box-sizing: border-box;
+}
+
+p{
+	width: 80%;
+	text-align: center;
+	font-size: 21px;
+	margin-right: auto;
+	margin-left: auto;
 }
 
 html {
@@ -25,7 +35,7 @@ header {
 
 header h1 {
   color: white;
-  font-size: 2rem;
+  font-size: 300%;
 }
 
 button {
